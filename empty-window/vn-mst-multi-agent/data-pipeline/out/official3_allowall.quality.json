@@ -1,0 +1,46 @@
+{
+  "input_total": 4,
+  "input_unique": 4,
+  "source_order": [
+    "dkkd",
+    "vietqr",
+    "esgoo",
+    "thongtindoanhnghiep",
+    "masothue"
+  ],
+  "stats": {
+    "ok": 4
+  },
+  "quality_by_source": {
+    "dkkd": {
+      "attempt": 4,
+      "success": 0,
+      "fail": 4
+    },
+    "vietqr": {
+      "attempt": 4,
+      "success": 3,
+      "fail": 1
+    },
+    "esgoo": {
+      "attempt": 1,
+      "success": 0,
+      "fail": 1
+    },
+    "thongtindoanhnghiep": {
+      "attempt": 1,
+      "success": 0,
+      "fail": 1
+    },
+    "masothue": {
+      "attempt": 1,
+      "success": 1,
+      "fail": 0
+    }
+  },
+  "output_records_raw": 4,
+  "output_records_dedup": 4,
+  "duplicates_removed": 0,
+  "manual_review_count": 0,
+  "updated_at": "2026-05-06T09:51:55.052378+00:00"
+}

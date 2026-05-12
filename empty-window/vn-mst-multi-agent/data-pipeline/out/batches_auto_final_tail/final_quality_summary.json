@@ -1,0 +1,69 @@
+{
+  "batch_count": 1,
+  "batches": [
+    {
+      "batch_file": "mst_batch_09.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_auto_final_tail\\mst_batch_09.jsonl",
+        "manual_review_file": "out\\batches_auto_final_tail\\mst_batch_09.manual_review.jsonl",
+        "quality_report_file": "out\\batches_auto_final_tail\\mst_batch_09.quality_report.json"
+      }
+    }
+  ],
+  "totals": {
+    "input_total": 1000,
+    "input_unique": 4,
+    "output_records": 4,
+    "dedup_records": 4,
+    "duplicates_removed": 0,
+    "manual_review_count": 0
+  },
+  "crawl_stats_total": {
+    "ok": 4
+  },
+  "quality_by_source_total": {
+    "vietqr": {
+      "attempt": 7,
+      "success": 1,
+      "fail": 6
+    },
+    "esgoo": {
+      "attempt": 4,
+      "success": 2,
+      "fail": 2
+    },
+    "masothue": {
+      "attempt": 1,
+      "success": 1,
+      "fail": 0
+    }
+  }
+}

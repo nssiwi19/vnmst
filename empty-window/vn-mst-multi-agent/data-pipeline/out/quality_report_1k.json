@@ -1,0 +1,35 @@
+{
+  "input_total": 1000,
+  "input_unique": 4,
+  "source_order": [
+    "vietqr",
+    "dkkd",
+    "masothue"
+  ],
+  "stats": {
+    "ok": 2,
+    "filtered_not_hn_hcm": 2
+  },
+  "quality_by_source": {
+    "vietqr": {
+      "attempt": 4,
+      "success": 2,
+      "fail": 2
+    },
+    "dkkd": {
+      "attempt": 2,
+      "success": 0,
+      "fail": 2
+    },
+    "masothue": {
+      "attempt": 2,
+      "success": 2,
+      "fail": 0
+    }
+  },
+  "output_records_raw": 2,
+  "output_records_dedup": 2,
+  "duplicates_removed": 0,
+  "manual_review_count": 0,
+  "updated_at": "2026-05-05T05:24:35.636742+00:00"
+}

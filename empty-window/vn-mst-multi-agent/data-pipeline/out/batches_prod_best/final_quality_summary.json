@@ -1,0 +1,393 @@
+{
+  "batch_count": 10,
+  "batches": [
+    {
+      "batch_file": "mst_batch_01.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_01.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_01.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_01.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_02.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_02.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_02.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_02.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_03.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_03.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_03.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_03.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_04.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_04.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_04.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_04.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_05.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_05.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_05.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_05.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_06.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_06.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_06.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_06.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_07.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_07.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_07.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_07.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_08.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_08.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_08.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_08.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_09.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 7,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_09.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_09.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_09.quality_report.json"
+      }
+    },
+    {
+      "batch_file": "mst_batch_10.txt",
+      "result": {
+        "input_total": 1000,
+        "input_unique": 4,
+        "crawl_stats": {
+          "ok": 4
+        },
+        "quality_by_source": {
+          "vietqr": {
+            "attempt": 8,
+            "success": 1,
+            "fail": 6
+          },
+          "esgoo": {
+            "attempt": 4,
+            "success": 2,
+            "fail": 2
+          },
+          "masothue": {
+            "attempt": 1,
+            "success": 1,
+            "fail": 0
+          }
+        },
+        "output_records": 4,
+        "dedup_records": 4,
+        "duplicates_removed": 0,
+        "manual_review_count": 0,
+        "storage": "none",
+        "storage_written": 0,
+        "output_file": "out\\batches_prod_best\\mst_batch_10.jsonl",
+        "manual_review_file": "out\\batches_prod_best\\mst_batch_10.manual_review.jsonl",
+        "quality_report_file": "out\\batches_prod_best\\mst_batch_10.quality_report.json"
+      }
+    }
+  ],
+  "totals": {
+    "input_total": 10000,
+    "input_unique": 40,
+    "output_records": 40,
+    "dedup_records": 40,
+    "duplicates_removed": 0,
+    "manual_review_count": 0
+  },
+  "crawl_stats_total": {
+    "ok": 40
+  },
+  "quality_by_source_total": {
+    "vietqr": {
+      "attempt": 71,
+      "success": 10,
+      "fail": 60
+    },
+    "esgoo": {
+      "attempt": 40,
+      "success": 20,
+      "fail": 20
+    },
+    "masothue": {
+      "attempt": 10,
+      "success": 10,
+      "fail": 0
+    }
+  }
+}

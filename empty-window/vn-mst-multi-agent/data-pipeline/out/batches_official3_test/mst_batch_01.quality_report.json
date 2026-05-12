@@ -1,0 +1,59 @@
+{
+  "input_total": 1000,
+  "input_unique": 4,
+  "source_order": [
+    "dkkd",
+    "gdt",
+    "vietqr",
+    "esgoo",
+    "thongtindoanhnghiep",
+    "xinvoice",
+    "masothue"
+  ],
+  "stats": {
+    "ok": 3,
+    "filtered_not_hn_hcm": 1
+  },
+  "quality_by_source": {
+    "dkkd": {
+      "attempt": 4,
+      "success": 0,
+      "fail": 4
+    },
+    "gdt": {
+      "attempt": 4,
+      "success": 0,
+      "fail": 4
+    },
+    "vietqr": {
+      "attempt": 4,
+      "success": 3,
+      "fail": 1
+    },
+    "esgoo": {
+      "attempt": 1,
+      "success": 0,
+      "fail": 1
+    },
+    "thongtindoanhnghiep": {
+      "attempt": 1,
+      "success": 0,
+      "fail": 1
+    },
+    "xinvoice": {
+      "attempt": 1,
+      "success": 0,
+      "fail": 1
+    },
+    "masothue": {
+      "attempt": 1,
+      "success": 1,
+      "fail": 0
+    }
+  },
+  "output_records_raw": 3,
+  "output_records_dedup": 3,
+  "duplicates_removed": 0,
+  "manual_review_count": 0,
+  "updated_at": "2026-05-06T09:43:23.798462+00:00"
+}

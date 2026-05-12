@@ -1,0 +1,35 @@
+{
+  "input_total": 18,
+  "input_unique": 18,
+  "source_order": [
+    "vietqr",
+    "esgoo",
+    "masothue"
+  ],
+  "stats": {
+    "ok": 13,
+    "manual_review": 5
+  },
+  "quality_by_source": {
+    "vietqr": {
+      "attempt": 42,
+      "success": 4,
+      "fail": 38
+    },
+    "esgoo": {
+      "attempt": 31,
+      "success": 8,
+      "fail": 22
+    },
+    "masothue": {
+      "attempt": 21,
+      "success": 1,
+      "fail": 20
+    }
+  },
+  "output_records_raw": 13,
+  "output_records_dedup": 13,
+  "duplicates_removed": 0,
+  "manual_review_count": 5,
+  "updated_at": "2026-05-06T11:19:17.941043+00:00"
+}

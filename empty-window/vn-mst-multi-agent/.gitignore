@@ -1,0 +1,30 @@
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# Logs
+*.log
+
+# Data
+data/checkpoint.csv
+data/page_checkpoint.json
+# data/listing.csv # Keep if you want to commit the data
+# data/doanh_nghiep.csv
+# data/doanh_nghiep.xlsx
+
+# OS
+.DS_Store
+Thumbs.db

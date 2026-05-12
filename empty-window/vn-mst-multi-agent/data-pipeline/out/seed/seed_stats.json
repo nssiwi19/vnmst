@@ -1,0 +1,13 @@
+{
+  "pages_visited": 50,
+  "pages_ok": 19,
+  "pages_failed": 31,
+  "queue_remaining": 950,
+  "company_links_discovered": 991,
+  "mst_total_raw": 177,
+  "mst_total_unique": 177,
+  "status_counts": {
+    "200": 19,
+    "403": 31
+  }
+}

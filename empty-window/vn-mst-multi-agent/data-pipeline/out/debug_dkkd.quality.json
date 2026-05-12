@@ -1,0 +1,22 @@
+{
+  "input_total": 4,
+  "input_unique": 4,
+  "source_order": [
+    "dkkd"
+  ],
+  "stats": {
+    "manual_review": 4
+  },
+  "quality_by_source": {
+    "dkkd": {
+      "attempt": 4,
+      "success": 0,
+      "fail": 4
+    }
+  },
+  "output_records_raw": 0,
+  "output_records_dedup": 0,
+  "duplicates_removed": 0,
+  "manual_review_count": 4,
+  "updated_at": "2026-05-06T09:45:48.333806+00:00"
+}

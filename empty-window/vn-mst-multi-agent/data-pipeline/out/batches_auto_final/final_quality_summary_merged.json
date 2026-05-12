@@ -1,0 +1,38 @@
+{
+  "batch_count": 10,
+  "totals": {
+    "input_total": 10000,
+    "input_unique": 40,
+    "output_records": 40,
+    "manual_review_count": 0
+  },
+  "quality_by_source_total": {
+    "vietqr": {
+      "attempt": 70,
+      "success": 10,
+      "fail": 60
+    },
+    "esgoo": {
+      "attempt": 40,
+      "success": 20,
+      "fail": 20
+    },
+    "masothue": {
+      "attempt": 10,
+      "success": 10,
+      "fail": 0
+    }
+  },
+  "batch_reports": [
+    "out\\batches_auto_final\\mst_batch_01.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_02.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_03.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_04.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_05.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_06.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_07.quality_report.json",
+    "out\\batches_auto_final\\mst_batch_08.quality_report.json",
+    "out\\batches_auto_final_tail\\mst_batch_09.quality_report.json",
+    "out\\batches_auto_final_tail2\\mst_batch_10.quality_report.json"
+  ]
+}
