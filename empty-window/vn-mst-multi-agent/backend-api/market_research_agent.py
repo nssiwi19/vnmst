@@ -115,97 +115,6 @@ def search_uploaded_dataset(query: str) -> str:
         return f"Lỗi truy vấn `{SHARED_TABLE_NAME}`: {str(e)}"
 
 
-# 3. Agents (max_iter=3 cho self-correction)
-researcher_agent = Agent(
-    role="Market Researcher",
-    goal=(
-        "Tìm kiếm trên Internet và thu thập dữ liệu mới nhất về thị trường. "
-        "TUYỆT ĐỐI KHÔNG tự bịa số liệu. Luôn dùng tool tìm kiếm."
-    ),
-    backstory=(
-        "Chuyên gia nghiên cứu thị trường. Luôn sử dụng công cụ tìm kiếm "
-        "để lấy dữ liệu thật. Không bao giờ đưa ra số liệu tự đoán."
-    ),
-    verbose=True,
-    allow_delegation=False,
-    llm=main_llm,
-    tools=[search_tool, search_uploaded_dataset, search_enterprise_database],
-    max_iter=3
-)
-
-verifier_agent = Agent(
-    role="Data Verifier",
-    goal=(
-        "Kiểm tra tính hợp lý và độ tin cậy của dữ liệu từ Researcher. "
-        "Loại bỏ thông tin mâu thuẫn, sai lệch."
-    ),
-    backstory=(
-        "Chuyên gia kiểm định dữ liệu (Data QA) khắt khe. "
-        "Không chấp nhận thông tin thiếu căn cứ hoặc số liệu không nhất quán."
-    ),
-    verbose=True,
-    allow_delegation=False,
-    llm=main_llm,
-    max_iter=3
-)
-
-writer_agent = Agent(
-    role="Report Writer",
-    goal=(
-        "Tổng hợp dữ liệu đã kiểm duyệt thành báo cáo chuyên nghiệp "
-        "có cấu trúc Markdown (Tóm tắt, Phân tích, Kết luận)."
-    ),
-    backstory=(
-        "Chuyên viên phân tích kinh doanh kiêm copywriter. "
-        "Biến số liệu khô khan thành câu chuyện hấp dẫn cho C-level."
-    ),
-    verbose=True,
-    allow_delegation=False,
-    llm=main_llm,
-    max_iter=3
-)
-
-# 4. Tasks
-task1 = Task(
-    description=(
-        'Nghiên cứu toàn diện về: "{topic}". '
-        'Nếu hỏi về công ty/MST cụ thể, dùng search_uploaded_dataset trước, '
-        'rồi search_enterprise_database, cuối cùng mới dùng internet_search_tool. '
-        'BẮT BUỘC dùng tool để lấy số liệu thực.'
-    ),
-    expected_output=(
-        "Bản tóm tắt dữ liệu thô toàn diện với số liệu thực tế, "
-        "xu hướng và nhận định chuyên gia."
-    ),
-    agent=researcher_agent,
-)
-
-task2 = Task(
-    description=(
-        "Kiểm tra logic dữ liệu thô từ Task 1. Tìm điểm mâu thuẫn. "
-        "Nếu không có dữ liệu, ghi nhận rõ 'KHÔNG CÓ DỮ LIỆU'. "
-        "KHÔNG lấy dữ liệu ngành/khu vực khác để thay thế."
-    ),
-    expected_output=(
-        "Danh sách thông tin đã xác thực. Nếu không có dữ liệu: "
-        "'Thị trường chưa tồn tại hoặc không có số liệu'."
-    ),
-    agent=verifier_agent,
-)
-
-task3 = Task(
-    description=(
-        "Viết báo cáo Markdown hoàn chỉnh từ dữ liệu Task 2. "
-        "Nếu Task 2 báo 'không có dữ liệu', kết luận ngắn gọn. "
-        "KHÔNG suy diễn số liệu, KHÔNG lời khuyên đầu tư sáo rỗng."
-    ),
-    expected_output=(
-        "Báo cáo Markdown phản ánh trung thực tình trạng dữ liệu."
-    ),
-    agent=writer_agent,
-)
-
-
 # 5. Hàm chạy pipeline (retry + validation)
 @retry_with_backoff(max_retries=3, base_delay=2.0, logger=logger)
 def run_market_research(topic: str) -> str:
@@ -215,6 +124,96 @@ def run_market_research(topic: str) -> str:
     - retry_with_backoff (application level)
     - validate_markdown_report trước khi trả kết quả
     """
+    # 3. Agents (Khởi tạo bên trong hàm để đảm bảo tính độc lập cho mỗi session/user)
+    researcher_agent = Agent(
+        role="Market Researcher",
+        goal=(
+            "Tìm kiếm trên Internet và thu thập dữ liệu mới nhất về thị trường. "
+            "TUYỆT ĐỐI KHÔNG tự bịa số liệu. Luôn dùng tool tìm kiếm."
+        ),
+        backstory=(
+            "Chuyên gia nghiên cứu thị trường. Luôn sử dụng công cụ tìm kiếm "
+            "để lấy dữ liệu thật. Không bao giờ đưa ra số liệu tự đoán."
+        ),
+        verbose=True,
+        allow_delegation=False,
+        llm=main_llm,
+        tools=[search_tool, search_uploaded_dataset, search_enterprise_database],
+        max_iter=3
+    )
+
+    verifier_agent = Agent(
+        role="Data Verifier",
+        goal=(
+            "Kiểm tra tính hợp lý và độ tin cậy của dữ liệu từ Researcher. "
+            "Loại bỏ thông tin mâu thuẫn, sai lệch."
+        ),
+        backstory=(
+            "Chuyên gia kiểm định dữ liệu (Data QA) khắt khe. "
+            "Không chấp nhận thông tin thiếu căn cứ hoặc số liệu không nhất quán."
+        ),
+        verbose=True,
+        allow_delegation=False,
+        llm=main_llm,
+        max_iter=3
+    )
+
+    writer_agent = Agent(
+        role="Report Writer",
+        goal=(
+            "Tổng hợp dữ liệu đã kiểm duyệt thành báo cáo chuyên nghiệp "
+            "có cấu trúc Markdown (Tóm tắt, Phân tích, Kết luận)."
+        ),
+        backstory=(
+            "Chuyên viên phân tích kinh doanh kiêm copywriter. "
+            "Biến số liệu khô khan thành câu chuyện hấp dẫn cho C-level."
+        ),
+        verbose=True,
+        allow_delegation=False,
+        llm=main_llm,
+        max_iter=3
+    )
+
+    # 4. Tasks (Khởi tạo bên trong hàm để tránh ghi đè dữ liệu Task giữa các thread/request)
+    task1 = Task(
+        description=(
+            'Nghiên cứu toàn diện về: "{topic}". '
+            'Nếu hỏi về công ty/MST cụ thể, dùng search_uploaded_dataset trước, '
+            'rồi search_enterprise_database, cuối cùng mới dùng internet_search_tool. '
+            'BẮT BUỘC dùng tool để lấy số liệu thực.'
+        ),
+        expected_output=(
+            "Bản tóm tắt dữ liệu thô toàn diện với số liệu thực tế, "
+            "xu hướng và nhận định chuyên gia."
+        ),
+        agent=researcher_agent,
+    )
+
+    task2 = Task(
+        description=(
+            "Kiểm tra logic dữ liệu thô từ Task 1. Tìm điểm mâu thuẫn. "
+            "Nếu không có dữ liệu, ghi nhận rõ 'KHÔNG CÓ DỮ LIỆU'. "
+            "KHÔNG lấy dữ liệu ngành/khu vực khác để thay thế."
+        ),
+        expected_output=(
+            "Danh sách thông tin đã xác thực. Nếu không có dữ liệu: "
+            "'Thị trường chưa tồn tại hoặc không có số liệu'."
+        ),
+        agent=verifier_agent,
+    )
+
+    task3 = Task(
+        description=(
+            "Viết báo cáo Markdown hoàn chỉnh từ dữ liệu Task 2. "
+            "Nếu Task 2 báo 'không có dữ liệu', kết luận ngắn gọn. "
+            "KHÔNG suy diễn số liệu, KHÔNG lời khuyên đầu tư sáo rỗng."
+        ),
+        expected_output=(
+            "Báo cáo Markdown phản ánh trung thực tình trạng dữ liệu."
+        ),
+        agent=writer_agent,
+    )
+
     crew = Crew(
         agents=[researcher_agent, verifier_agent, writer_agent],
         tasks=[task1, task2, task3],
