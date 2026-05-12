@@ -1,30 +1,38 @@
+# Environment
+.env
+.venv/
+venv/
+env/
+ENV/
+
 # Node
 node_modules/
 dist/
 *.tsbuildinfo
+.npm/
 
 # Python
-.venv/
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
-.venv/
-venv/
-ENV/
-env/
-.env
 
 # Logs
 *.log
+crawler_hsctvn.log
+
+# Project specific
+reorganize.ps1
+exclude_list.txt
 
 # Data
-data/checkpoint.csv
-data/page_checkpoint.json
-# data/listing.csv # Keep if you want to commit the data
-# data/doanh_nghiep.csv
-# data/doanh_nghiep.xlsx
+**/data/checkpoint.csv
+**/data/page_checkpoint.json
+**/data/*.csv
+**/data/*.xlsx
 
 # OS
 .DS_Store
 Thumbs.db
+.idea/
+.vscode/

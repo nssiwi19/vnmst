@@ -1,0 +1,12 @@
+crewai
+litellm
+streamlit
+python-dotenv
+pydantic
+duckduckgo-search
+pandas
+openpyxl
+setuptools<70.0.0
+importlib-metadata>=8.0.0
+opentelemetry-api>=1.34.1
+supabase

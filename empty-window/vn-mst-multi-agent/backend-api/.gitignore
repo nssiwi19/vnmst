@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+python-3.12.8-amd64.exe
+*.log
+.pytest_cache/
