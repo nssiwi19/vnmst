@@ -1,0 +1,1291 @@
+### VietQR Template Customization
+
+Source: https://www.vietqr.io/markdown-page
+
+Instructions on how to create and use custom VietQR templates by registering on my.vietqr.io.
+
+```APIDOC
+## VietQR Template Customization
+
+### Description
+Customize your VietQR codes by creating a personal template. This involves registering on the my.vietqr.io portal, creating a new template, and selecting design options like theme, logo, and colors. The generated template ID is then used in the Quick Link URL.
+
+### Steps
+1. Visit `my.vietqr.io` and register for an account.
+2. Create a new template.
+3. Choose a theme, upload a logo, and adjust colors to match your brand.
+4. Replace the `<TEMPLATE>` placeholder in the Quick Link URL with your newly created template ID.
+```
+
+--------------------------------
+
+### Example Success Response for Business Information Lookup
+
+Source: https://www.vietqr.io/business/:taxCode
+
+This is an example of a successful response from the VietQR.IO business information API when a valid tax code is provided. It includes a success code, a descriptive message, and a 'data' object containing the business's ID, name, international name, short name, and address.
+
+```json
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "id": "0316794479",
+    "name": "CÔNG TY TNHH CASSO",
+    "internationalName": "CASSO COMPANY LIMITED",
+    "shortName": "CASSO",
+    "address": "I.102D, Nhà A, Khu Công Nghệ Phần Mềm, Đường Nội Bộ Đại học Quốc Gia Thành Phố Hồ Chí Minh, Khu phố 6, Phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+  }
+}
+```
+
+--------------------------------
+
+### Create Email Client Deeplink
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+An example of a standard mailto deeplink that instructs the mobile operating system to open the default email application with pre-filled fields.
+
+```html
+<a href="mailto:someone@yoursite.com?subject=Mail from Our Site">Email Us</a>
+```
+
+--------------------------------
+
+### Payment Gateway Integration
+
+Source: https://www.vietqr.io/markdown-page
+
+Information regarding the integration of applications and websites with pre-built payment gateway interfaces.
+
+```APIDOC
+## Payment Gateway Integration
+
+### Description
+Integrate your application or website with VietQR's pre-built payment gateway interfaces for a seamless payment experience. This offers an alternative to using Quick Links for direct QR code generation.
+```
+
+--------------------------------
+
+### Current VietQR.io Basic Deeplink
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This section details the current implementation of VietQR deeplinks by VietQR.io. This basic version primarily focuses on directing users to their preferred banking app, reducing manual app switching, although it does not yet support automatic pre-filling of payment details.
+
+```APIDOC
+## Current VietQR.io Basic Deeplink
+
+### Description
+This is the current implementation of VietQR deeplinks provided by VietQR.io. It allows users to be directed to a specific banking application, simplifying the initial step of opening the correct app for payment. However, it does not automatically populate payment details like the account number or amount within the banking app.
+
+### Method
+GET (Implicit via URL)
+
+### Endpoint
+https://dl.vietqr.io/pay
+
+### Parameters
+#### Query Parameters
+- **app** (string) - Required - The identifier for the desired banking app (e.g., 'vcb', 'mb').
+- **ba** (string) - Optional - Recipient account identifier. Format: `ACCOUNT_NUMBER@BANK_CODE`. While optional in this basic version, it's recommended for future compatibility.
+
+### Request Example
+```html
+<a href="https://dl.vietqr.io/pay?app=vcb&ba=CAS01@ocb">Pay with VCB</a>
+```
+
+### Response
+#### Success Response (App Launch)
+- The user is redirected to the specified banking application.
+
+#### Response Example
+(No direct response body, as the interaction involves launching an external application.)
+```
+
+--------------------------------
+
+### Generate VietQR Quick Link URL
+
+Source: https://www.vietqr.io/markdown-page
+
+Constructs a basic VietQR image URL using the bank ID, account number, and template style. The URL follows the pattern https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png.
+
+```text
+https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg
+```
+
+--------------------------------
+
+### Add Transaction Parameters to VietQR
+
+Source: https://www.vietqr.io/markdown-page
+
+Extends the base Quick Link URL by appending query parameters for transaction amount, payment description, and account holder name. Ensure all parameter values are URL-encoded.
+
+```text
+https://img.vietqr.io/image/vietinbank-113366668888-compact2.jpg?amount=1000&addInfo=dong%20qop%20quy%20vac%20xin&accountName=Quy%20Vac%20Xin%20Covid
+```
+
+--------------------------------
+
+### GET /v2/business/{taxCode}
+
+Source: https://www.vietqr.io/business/:taxCode
+
+Retrieves detailed business information based on the provided tax code, useful for automated invoice processing.
+
+```APIDOC
+## GET /v2/business/{taxCode}
+
+### Description
+Retrieves business information based on the tax code to assist in invoice generation during customer checkout.
+
+### Method
+GET
+
+### Endpoint
+https://api.vietqr.io/v2/business/{taxCode}
+
+### Parameters
+#### Path Parameters
+- **taxCode** (string) - Required - The tax identification number of the business.
+
+### Request Example
+GET https://api.vietqr.io/v2/business/0316794479
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code (e.g., "00").
+- **desc** (string) - Status description.
+- **data** (object) - Business details including id, name, internationalName, shortName, and address.
+
+#### Response Example
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "id": "0316794479",
+    "name": "CÔNG TY TNHH CASSO",
+    "internationalName": "CASSO COMPANY LIMITED",
+    "shortName": "CASSO",
+    "address": "I.102D, Nhà A, Khu Công Nghệ Phần Mềm, Đường Nội Bộ Đại học Quốc Gia Thành Phố Hồ Chí Minh, Khu phố 6, Phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+  }
+}
+```
+
+--------------------------------
+
+### Add Payment Details to VietQR Quick Link
+
+Source: https://www.vietqr.io/markdown-page
+
+This section explains how to append payment details such as amount, description, and account name to the Quick Link URL.
+
+```APIDOC
+## GET /image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png?amount=<AMOUNT>&addInfo=<DESCRIPTION>&accountName=<ACCOUNT_NAME>
+
+### Description
+Appends payment details like amount, description, and account name to the VietQR Quick Link URL.
+
+### Method
+GET
+
+### Endpoint
+`https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png?amount=<AMOUNT>&addInfo=<DESCRIPTION>&accountName=<ACCOUNT_NAME>`
+
+### Parameters
+#### Query Parameters
+- **amount** (string) - Optional - The payment amount.
+- **addInfo** (string) - Optional - The description or content for the payment.
+- **accountName** (string) - Optional - The name associated with the account.
+
+### Request Example
+```
+https://img.vietqr.io/image/vietinbank-113366668888-compact2.jpg?amount=1000&addInfo=dong%20qop%20quy%20vac%20xin&accountName=Quy%20Vac%20Xin%20Covid
+```
+
+### Response
+#### Success Response (200)
+Returns a PNG image of the VietQR code with payment details embedded.
+
+#### Response Example
+(Image data)
+```
+
+--------------------------------
+
+### API Response for Bank App Deeplinks (JSON)
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This JSON structure is returned by the API endpoints for retrieving deeplink information of Vietnamese bank applications. It includes details like app ID, logo, name, bank name, monthly installs, and the app's deeplink URL.
+
+```json
+{
+    "apps": [
+        {
+            "appId": "mb",
+            "appLogo": "https://is2-ssl.mzstatic.com/image/thumb/Purple122/v4/f4/0a/b6/f40ab6a2-e67d-e267-9c46-ae03dfa238a9/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png",
+            "appName": "MB Bank",
+            "bankName": "Ngân hàng TMCP Quân đội",
+            "monthlyInstall": 400000,
+            "deeplink": "https://dl.vietqr.io/pay?app=mb"
+        }
+    ]
+}
+
+```
+
+--------------------------------
+
+### Generate VietQR Code (Quick Link)
+
+Source: https://www.vietqr.io/markdown-page
+
+This endpoint allows you to generate a VietQR code image using a Quick Link URL. You can specify the bank ID, account number, and template.
+
+```APIDOC
+## GET /image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png
+
+### Description
+Generates a VietQR code image based on the provided bank ID, account number, and template.
+
+### Method
+GET
+
+### Endpoint
+`https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png`
+
+### Parameters
+#### Path Parameters
+- **BANK_ID** (string) - Required - The identifier for the bank.
+- **ACCOUNT_NO** (string) - Required - The account number for the QR code.
+- **TEMPLATE** (string) - Required - The identifier for the QR code template.
+
+### Request Example
+```
+https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg
+```
+
+### Response
+#### Success Response (200)
+Returns a PNG image of the VietQR code.
+
+#### Response Example
+(Image data)
+```
+
+--------------------------------
+
+### GET /v2/business/{taxCode}
+
+Source: https://www.vietqr.io/danh-sach-api/tax-id-lookup
+
+Retrieves business information based on the provided tax identification number.
+
+```APIDOC
+## GET /v2/business/{taxCode}
+
+### Description
+Retrieves business information based on the provided tax identification number to facilitate invoice generation.
+
+### Method
+GET
+
+### Endpoint
+https://api.vietqr.io/v2/business/{taxCode}
+
+### Parameters
+#### Path Parameters
+- **taxCode** (string) - Required - The tax identification number of the business.
+
+### Request Example
+N/A (GET request)
+
+### Response
+#### Success Response (200)
+- **code** (string) - Response status code.
+- **desc** (string) - Description of the response status.
+- **data** (object) - Business details object containing id, name, internationalName, shortName, and address.
+
+#### Response Example
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "id": "0316794479",
+    "name": "CÔNG TY TNHH CASSO",
+    "internationalName": "CASSO COMPANY LIMITED",
+    "shortName": "CASSO",
+    "address": "I.102D, Nhà A, Khu Công Nghệ Phần Mềm, Đường Nội Bộ Đại học Quốc Gia Thành Phố Hồ Chí Minh, Khu phố 6, Phường Linh Trung, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam"
+  }
+}
+```
+
+--------------------------------
+
+### GET /v2/banks
+
+Source: https://www.vietqr.io/danh-sach-api/api-danh-sach-ma-ngan-hang
+
+Retrieves the full list of banks supported by the VietQR platform, including details required for Quick Link generation.
+
+```APIDOC
+## GET https://api.vietqr.io/v2/banks
+
+### Description
+Returns a list of all banks supported by VietQR. This data is essential for identifying bank codes (BIN) used in Quick Link generation.
+
+### Method
+GET
+
+### Endpoint
+https://api.vietqr.io/v2/banks
+
+### Parameters
+None
+
+### Request Example
+```bash
+curl https://api.vietqr.io/v2/banks
+```
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code (e.g., "00")
+- **desc** (string) - Description of the result
+- **data** (array) - List of bank objects
+ - **id** (integer) - Unique identifier
+ - **name** (string) - Full legal name of the bank
+ - **code** (string) - Bank code
+ - **bin** (string) - Bank Identification Number (used for Quick Links)
+ - **shortName** (string) - Short name of the bank
+ - **logo** (string) - URL to the bank's logo
+ - **transferSupported** (integer) - 1 if transfer is supported, 0 otherwise
+ - **lookupSupported** (integer) - 1 if account lookup is supported, 0 otherwise
+
+#### Response Example
+{
+ "code": "00",
+ "desc": "Get Bank list successful!",
+ "data": [
+ {
+ "id": 1,
+ "name": "Ngân hàng TMCP An Bình",
+ "code": "ABB",
+ "bin": "970425",
+ "shortName": "ABBANK",
+ "logo": "https://api.vietqr.io/img/ABB.png",
+ "transferSupported": 1,
+ "lookupSupported": 1
+ }
+ ]
+}
+```
+
+--------------------------------
+
+### Current Basic VietQR Deeplink for App Redirection
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This basic deeplink redirects users to a specified bank app for payment. Currently, it does not support automatic pre-filling of payment details within the bank app, but it reduces manual app switching. It's recommended to use the full parameter set for future compatibility.
+
+```html
+<a href="https://dl.vietqr.io/pay?app=vcb&ba=CAS01@ocb">Thanh toán bằng VCB</a>    
+```
+
+--------------------------------
+
+### API: List of Bank App Deeplinks
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This API allows you to retrieve a list of deeplinks for various Vietnamese bank applications, categorized by operating system (Android and iOS). This data can be used to dynamically generate payment links or inform users about available banking options.
+
+```APIDOC
+## API: List of Bank App Deeplinks
+
+### Description
+This API provides endpoints to fetch lists of deeplinks for Android and iOS banking applications in Vietnam. This information can be utilized to dynamically generate payment links or provide users with a selection of banking apps for transactions.
+
+### Method
+GET
+
+### Endpoint
+- Android: `https://api.vietqr.io/v2/android-app-deeplinks`
+- iOS: `https://api.vietqr.io/v2/ios-app-deeplinks`
+
+### Parameters
+None
+
+### Request Example
+```bash
+curl -X GET https://api.vietqr.io/v2/android-app-deeplinks
+```
+
+### Response
+#### Success Response (200)
+- **apps** (array) - A list of app objects, each containing details about a banking application.
+ - **appId** (string) - Unique identifier for the app (e.g., 'mb').
+ - **appLogo** (string) - URL of the app's logo.
+ - **appName** (string) - The name of the application as displayed on app stores (e.g., 'MB Bank').
+ - **bankName** (string) - The name of the bank associated with the app (e.g., 'Ngân hàng TMCP Quân đội').
+ - **monthlyInstall** (integer) - Estimated monthly installs, sourced from SensorTower (e.g., 400000).
+ - **deeplink** (string) - The base deeplink for the application (e.g., 'https://dl.vietqr.io/pay?app=mb').
+
+#### Response Example
+```json
+{
+    "apps": [
+        {
+            "appId": "mb",
+            "appLogo": "https://is2-ssl.mzstatic.com/image/thumb/Purple122/v4/f4/0a/b6/f40ab6a2-e67d-e267-9c46-ae03dfa238a9/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png",
+            "appName": "MB Bank",
+            "bankName": "Ngân hàng TMCP Quân đội",
+            "monthlyInstall": 400000,
+            "deeplink": "https://dl.vietqr.io/pay?app=mb"
+        }
+    ]
+}
+```
+```
+
+--------------------------------
+
+### Create Bank App Deeplink for VietQR
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+An HTML anchor tag used to trigger a specific mobile banking application. The href attribute points to the VietQR deeplink service, requiring the specific bank's ID as a parameter.
+
+```html
+<a href="https://dl.vietqr.io/pay?app=vcb">Mở App VCB</a>
+```
+
+--------------------------------
+
+### Expected VietQR Deeplink Standard
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This section describes the envisioned deeplink standard for VietQR, inspired by India's UPI system. It aims to provide a seamless payment experience by allowing users to initiate bank transfers directly from shop apps, with automatic pre-filling of recipient details, amount, and payment purpose.
+
+```APIDOC
+## Expected VietQR Deeplink Standard
+
+### Description
+This deeplink standard aims to facilitate a seamless payment experience by allowing users to initiate bank transfers directly from shop applications. Upon clicking a deeplink, the mobile operating system will present a list of supported banking apps. Selecting an app will automatically open it, pre-filling the recipient's account number, bank code, amount, and payment purpose. The user then confirms the payment, and the banking app redirects back to the shop app upon successful completion.
+
+### Method
+GET (Implicit via URL scheme)
+
+### Endpoint
+vietqr://pay
+
+### Parameters
+#### Query Parameters
+- **ba** (string) - Required - Recipient account identifier. Format: `ACCOUNT_NUMBER@BANK_CODE`.
+- **am** (string) - Required - Transfer amount.
+- **tn** (string) - Optional - Payment purpose/description.
+- **app** (string) - Optional - Preferred banking app to use for payment.
+- **bn** (string) - Optional - Recipient's account name.
+- **url** (string) - Optional - URL to redirect back to the shop app upon successful payment.
+
+### Request Example
+```html
+<a href="vietqr://pay?ba=113366668888@inc&am=790000&tn=Thanh%20toan%20DH123&app=ocb&bn=NGUYEN%20VAN%20A&url=https://payos.vn">Pay Now</a>
+```
+
+### Response
+#### Success Response (App Launch)
+- The specified banking application is launched.
+- Relevant payment details are pre-filled within the banking app.
+
+#### Response Example
+(No direct response body, as the interaction involves launching an external application.)
+```
+
+--------------------------------
+
+### Get Business Information by Tax Code (VietQR.IO API)
+
+Source: https://www.vietqr.io/business/:taxCode
+
+This API endpoint allows you to retrieve detailed information about a business using its tax code. It is useful for obtaining data required for invoice generation during customer payments. The API returns a success message with business details or specific error codes for invalid tax codes or rate limiting.
+
+```HTTP
+GET https://api.vietqr.io/v2/business/{taxCode}
+```
+
+--------------------------------
+
+### Expected VietQR Deeplink for Payments
+
+Source: https://www.vietqr.io/danh-sach-api/deeplink-app-ngan-hang
+
+This is the anticipated deeplink format for future integration with Vietnamese banking apps, enabling automatic filling of payment details and return to the shop app. It requires support from banking applications to parse and act upon the parameters.
+
+```html
+<a href="vietqr://pay?ba=113366668888@inc&am=790000">Thanh toán ngay</a>    
+```
+
+--------------------------------
+
+### Generate VietQR Code with Payment Details
+
+Source: https://www.vietqr.io/intro
+
+Extends the Quick Link functionality by allowing the addition of payment amount, description, and account name as query parameters.
+
+```APIDOC
+## GET /image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.jpg?amount=<AMOUNT>&addInfo=<DESCRIPTION>&accountName=<ACCOUNT_NAME>
+
+### Description
+Generates a VietQR code image with specified payment details including amount, description, and account name.
+
+### Method
+GET
+
+### Endpoint
+`/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.jpg`
+
+### Query Parameters
+- **amount** (string) - Optional - The payment amount.
+- **addInfo** (string) - Optional - The payment description or additional information. URL-encoded.
+- **accountName** (string) - Optional - The name associated with the account. URL-encoded.
+
+### Request Example
+```
+https://img.vietqr.io/image/vietinbank-113366668888-compact2.jpg?amount=1000&addInfo=dong%20qop%20quy%20vac%20xin&accountName=Quy%20Vac%20Xin%20Covid
+```
+
+### Response
+#### Success Response (200)
+- **image/jpeg** (binary) - The generated QR code image.
+
+#### Response Example
+(Binary image data)
+```
+
+--------------------------------
+
+### Generate VietQR Code (Quick Link)
+
+Source: https://www.vietqr.io/intro
+
+Generates a VietQR code image using a Quick Link URL. This allows for basic QR code generation with bank ID, account number, and template.
+
+```APIDOC
+## GET /image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png
+
+### Description
+Generates a VietQR code image based on the provided bank ID, account number, and template.
+
+### Method
+GET
+
+### Endpoint
+`/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png`
+
+### Parameters
+#### Path Parameters
+- **BANK_ID** (string) - Required - The identifier for the bank.
+- **ACCOUNT_NO** (string) - Required - The account number for the QR code.
+- **TEMPLATE** (string) - Required - The template ID for the QR code design.
+
+### Request Example
+```
+https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg
+```
+
+### Response
+#### Success Response (200)
+- **image/png** (binary) - The generated QR code image.
+
+#### Response Example
+(Binary image data)
+```
+
+--------------------------------
+
+### Custom VietQR Template Management
+
+Source: https://www.vietqr.io/intro
+
+Information on how to create and manage custom VietQR templates for official use via the my.vietqr.io portal.
+
+```APIDOC
+## Custom VietQR Template Management (my.vietqr.io)
+
+### Description
+To use VietQR Quick Links in official projects, you need to create a custom template. This involves registering an account on my.vietqr.io, creating a new template, and customizing its appearance (theme, logo, colors).
+
+### Process
+1. **Access Portal**: Visit `my.vietqr.io`.
+2. **Register Account**: Create a new user account.
+3. **Create Template**: Initiate the creation of a new template.
+4. **Customize**: Select a theme, upload a logo, and adjust colors to match your brand.
+5. **Get Template ID**: After creation, you will receive a unique template ID.
+6. **Use in Quick Link**: Replace the `<TEMPLATE>` placeholder in the VietQR Quick Link URL with your custom template ID.
+```
+
+--------------------------------
+
+### POST /v2/generate
+
+Source: https://www.vietqr.io/danh-sach-api/link-tao-ma-nhanh/api-tao-ma-qr
+
+Generates a QR code for bank transfers with various formatting options.
+
+```APIDOC
+## POST /v2/generate
+
+### Description
+This endpoint generates a QR code for bank transfers. It supports various templates to customize the QR code's appearance, including logos and transfer information.
+
+### Method
+POST
+
+### Endpoint
+/v2/generate
+
+### Parameters
+#### Query Parameters
+None
+
+#### Request Body
+- **accountNo** (string) - Required - The recipient's bank account number.
+- **accountName** (string) - Required - The recipient's account name.
+- **acqId** (string) - Required - The acquiring institution ID (bank BIN).
+- **addInfo** (string) - Optional - Additional information for the transfer (e.g., payment purpose).
+- **amount** (string) - Optional - The transfer amount.
+- **template** (string) - Optional - The template for the QR code. Options: `compact2`, `compact`, `qr_only`, `print`.
+
+### Request Example
+```json
+{
+    "accountNo": "113366668888",
+    "accountName": "QUY VAC XIN PHONG CHONG COVID",
+    "acqId": "970415",
+    "addInfo": "Ung Ho Quy Vac Xin",
+    "amount": "79000",
+    "template": "compact"
+}
+```
+
+### Response
+#### Success Response (200)
+- **qrCode** (string) - The QR code data in text format.
+- **qrDataURL** (string) - The QR code image as a Data URI.
+
+#### Response Example
+```json
+{
+    "qrCode": "VNQR|02|113366668888|QUY VAC XIN PHONG CHONG COVID|970415|Ung Ho Quy Vac Xin|79000|compact|",
+    "qrDataURL": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+}
+```
+
+### Usage Demo
+```bash
+curl --location --request POST 'https://api.vietqr.io/v2/generate' \
+--header 'x-client-id: <CLIENT_ID_HERE>' \
+--header 'x-api-key: <API_KEY_HERE>' \
+--header 'Content-Type: application/json' \
+--data-raw '{ \
+    "accountNo": "113366668888", \
+    "accountName": "QUY VAC XIN PHONG CHONG COVID", \
+    "acqId": "970415", \
+    "addInfo": "Ung Ho Quy Vac Xin", \
+    "amount": "79000", \
+    "template": "compact" \
+}'
+```
+
+### Supported Template Formats
+- **compact2**: 540x640 - Includes QR code, logos, and transfer information.
+- **compact**: 540x540 - QR code with VietQR, Napas, and bank logos.
+- **qr_only**: 480x480 - Simple QR code image only.
+- **print**: 600x776 - Includes QR code, logos, and full transfer details.
+
+### Response Field Meanings
+- **qrCode**: QR code as a text string.
+- **qrDataURL**: QR code image in Data URI format, usable for embedding in websites or displaying in browsers.
+```
+
+--------------------------------
+
+### VietQR Quick Link Generation
+
+Source: https://www.vietqr.io/danh-sach-api/link-tao-ma-nhanh
+
+This endpoint allows you to generate a VietQR code image by constructing a specific URL. You can customize various parameters to tailor the QR code to your needs.
+
+```APIDOC
+## GET /image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png
+
+### Description
+Generates a VietQR code image with customizable transfer details.
+
+### Method
+GET
+
+### Endpoint
+`https://img.vietqr.io/image/<BANK_ID>-<ACCOUNT_NO>-<TEMPLATE>.png`
+
+### Query Parameters
+- **amount** (string) - Optional - The transfer amount. Maximum 13 digits.
+- **addInfo** (string) - Optional - The transfer description. Maximum 50 characters, no special characters.
+- **accountName** (string) - Optional - The beneficiary's account name. This field is not part of the standard VietQR code generation.
+
+### Path Parameters
+- **BANK_ID** (string) - Required - The bank identifier. Can be the bank's BIN code, common name, or NAPAS shorthand code.
+- **ACCOUNT_NO** (string) - Required - The recipient's account number. Supports account numbers, alias names, or virtual account numbers (max 19 characters).
+- **TEMPLATE** (string) - Required - The ID of the template that defines the presentation of the VietQR image. Available templates: `compact2`, `compact`, `qr_only`, `print`.
+
+### Request Example
+```
+https://img.vietqr.io/image/vietinbank-113366668888-compact2.png?amount=790000&addInfo=dong%20qop%20quy%20vac%20xin&accountName=Quy%20Vac%20Xin%20Covid
+```
+
+### Response
+#### Success Response (200)
+Returns a PNG image containing the VietQR code.
+
+#### Response Example
+(Image data for the QR code)
+```
+
+--------------------------------
+
+### Configure Webhook API
+
+Source: https://www.vietqr.io/paymentRequests
+
+Registers a webhook URL to receive payment status updates from VietQR. Requires authentication via x-client-id and x-api-key headers.
+
+```json
+{
+  "webhook_url": "https://example.com/receiveWebhook"
+}
+```
+
+--------------------------------
+
+### POST /v2/generate - Create QR Code
+
+Source: https://www.vietqr.io/danh-sach-api/link-tao-ma-nhanh/api-tao-ma-qr
+
+This API endpoint allows you to generate a QR code for receiving money. You need to provide account details, and optionally, the amount and additional information.
+
+```APIDOC
+## POST /v2/generate
+
+### Description
+This API endpoint allows you to generate a QR code for receiving money. You need to provide account details, and optionally, the amount and additional information.
+
+### Method
+POST
+
+### Endpoint
+https://api.vietqr.io/v2/generate
+
+### Parameters
+#### Header Parameters
+- **x-client-id** (string) - Required - Client ID for authentication. Obtain from My VietQR.
+- **x-api-key** (string) - Required - API Key for authentication. Obtain from My VietQR.
+
+#### Request Body
+- **accountNo** (string) - Required - Beneficiary bank account number. Must be between 6 and 19 characters.
+- **accountName** (string) - Optional - Beneficiary bank account name. Vietnamese, no diacritics, uppercase, 5-50 characters, no special characters.
+- **acqId** (integer) - Required - Bank identification code (BIN), 6 digits.
+- **amount** (integer) - Optional - Transfer amount, up to 13 characters.
+- **addInfo** (string) - Optional - Transfer description, up to 25 characters. Vietnamese, no diacritics, no special characters.
+- **format** (string) - Optional - Desired VietQR format.
+- **template** (string) - Optional - Desired VietQR template.
+
+### Request Example
+```json
+{
+  "accountNo": "113366668888",
+  "accountName": "QUY VAC XIN PHONG CHONG COVID",
+  "acqId": 970415,
+  "amount": 79000,
+  "addInfo": "Ung Ho Quy Vac Xin",
+  "format": "text",
+  "template": "compact"
+}
+```
+
+### Response
+#### Success Response (200)
+- **status** (string) - Indicates the success of the operation.
+- **data** (object) - Contains the generated QR code information.
+
+#### Response Example
+```json
+{
+  "status": "success",
+  "data": {
+    "qrCode": "iVBORw0KGgoAAAANSUhEUgAA..."
+  }
+}
+```
+```
+
+--------------------------------
+
+### POST /v2/paymentRequests
+
+Source: https://www.vietqr.io/paymentRequests
+
+Creates a new payment link for an order, allowing customers to pay via VietQR.
+
+```APIDOC
+## POST /v2/paymentRequests
+
+### Description
+API used to create an order payment link.
+
+### Method
+POST
+
+### Endpoint
+https://api.vietqr.io/v2/paymentRequests
+
+### Parameters
+#### Request Body
+- **orderCode** (integer) - Required - Order ID
+- **amount** (integer) - Required - Payment amount
+- **description** (integer) - Required - Payment description
+- **buyerName** (string) - Optional - Buyer name
+- **buyerEmail** (string) - Optional - Buyer email
+- **buyerPhone** (string) - Optional - Buyer phone
+- **buyerAddress** (string) - Optional - Buyer address
+- **template** (string) - Optional - VietQR template
+- **items** (Array) - Optional - List of items
+- **cancelUrl** (string) - Optional - URL for cancelled orders
+- **successUrl** (string) - Optional - URL for successful payments
+
+### Request Example
+{
+  "orderCode": 123,
+  "amount": 56000000,
+  "description": "VQPMK123",
+  "buyerName": "Nguyen Van A",
+  "buyerEmail": "buyer-email@gmail.com",
+  "buyerPhone": "090xxxxxxx",
+  "buyerAddress": "số nhà, đường, phường, tỉnh hoặc thành phố",
+  "template": "compact",
+  "items": [{"name": "Iphone", "quantity": 2, "price": 28000000}],
+  "cancelUrl": "https://your-cancel-url.com",
+  "successUrl": "https://your-success-url.com"
+}
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code
+- **desc** (string) - Status description
+- **data** (object) - Payment details including checkoutUrl
+
+#### Response Example
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "id": "a7a9454060cd48909864b3747289ff38",
+    "checkoutUrl": "https://api.vietqr.io/web/a7a9454060cd48909864b3747289ff38"
+  }
+}
+```
+
+--------------------------------
+
+### POST /v2/generate
+
+Source: https://www.vietqr.io/generate
+
+This API allows you to generate a QR code based on the recipient's account information.
+
+```APIDOC
+## POST /v2/generate
+
+### Description
+This API allows you to generate a QR code based on the recipient's account information.
+
+### Method
+POST
+
+### Endpoint
+/v2/generate
+
+### Parameters
+#### Header Parameters
+- **x-client-id** (string) - Required - Client ID for authentication. Get it from My VietQR.
+- **x-api-key** (string) - Required - API key for authentication. Get it from My VietQR.
+
+#### Request Body
+- **accountNo** (string) - Required - Beneficiary bank account number. Minimum 6 characters, maximum 19 characters.
+- **accountName** (string) - Optional - Bank account name. Vietnamese, no diacritics, uppercase, minimum 5 characters, maximum 50 characters. No special characters.
+- **acqId** (integer) - Required - Bank identifier (BIN). 6 digits.
+- **amount** (integer) - Optional - Transfer amount. Maximum 13 characters.
+- **addInfo** (string) - Optional - Transfer content. Vietnamese, no diacritics, maximum 25 characters. No special characters.
+- **format** (string) - Optional - The format of the VietQR to be returned.
+- **template** (string) - Optional - The template of the VietQR to be returned.
+
+### Request Example
+```json
+{
+  "accountNo": "113366668888",
+  "accountName": "QUY VAC XIN PHONG CHONG COVID",
+  "acqId": 970415,
+  "amount": 79000,
+  "addInfo": "Ung Ho Quy Vac Xin",
+  "format": "text",
+  "template": "compact"
+}
+```
+
+### Response
+#### Success Response (200)
+- **status** (string) - Indicates the success of the operation.
+- **data** (object) - Contains the generated QR code data.
+
+#### Response Example
+```json
+{
+  "status": "success",
+  "data": {
+    "qrCode": "iVBORw0KGgoAAAANSUhEUgAA..."
+  }
+}
+```
+```
+
+--------------------------------
+
+### Create Payment Link API
+
+Source: https://www.vietqr.io/paymentRequests
+
+Generates a unique payment link for an order. Requires authentication via x-client-id and x-api-key headers and accepts order details including amount, description, and buyer information.
+
+```json
+{
+  "orderCode": 123,
+  "amount": 56000000,
+  "description": "VQPMK123",
+  "buyerName": "Nguyen Van A",
+  "buyerEmail": "buyer-email@gmail.com",
+  "buyerPhone": "090xxxxxxx",
+  "buyerAddress": "số nhà, đường, phường, tỉnh hoặc thành phố",
+  "template": "compact",
+  "items": [
+    {
+      "name": "Iphone",
+      "quantity": 2,
+      "price": 28000000
+    }
+  ],
+  "cancelUrl": "https://your-cancel-url.com",
+  "successUrl": "https://your-success-url.com"
+}
+```
+
+--------------------------------
+
+### Generate QR Code using VietQR API
+
+Source: https://www.vietqr.io/danh-sach-api/link-tao-ma-nhanh/api-tao-ma-qr
+
+This snippet demonstrates how to make a POST request to the VietQR API to generate a payment QR code. It includes required headers such as client ID and API key, and a JSON payload with account details, amount, and desired template.
+
+```curl
+curl --location --request POST 'https://api.vietqr.io/v2/generate' \
+--header 'x-client-id: <CLIENT_ID_HERE>' \
+--header 'x-api-key: <API_KEY_HERE>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "accountNo": "113366668888",
+    "accountName": "QUY VAC XIN PHONG CHONG COVID",
+    "acqId": "970415",
+    "addInfo": "Ung Ho Quy Vac Xin",
+    "amount": "79000",
+    "template": "compact"
+}'
+```
+
+--------------------------------
+
+### POST /v2/paymentGateway/confirmWebhook
+
+Source: https://www.vietqr.io/paymentRequests
+
+Configures a webhook URL to receive transaction data updates from VietQR.
+
+```APIDOC
+## POST /v2/paymentGateway/confirmWebhook
+
+### Description
+API used to register a webhook URL for receiving payment notifications.
+
+### Method
+POST
+
+### Endpoint
+https://api.vietqr.io/v2/paymentGateway/confirmWebhook
+
+### Parameters
+#### Request Body
+- **webhook_url** (string) - Required - The URL to receive webhook events
+
+### Request Example
+{
+  "webhook_url": "https://example.com/receiveWebhook"
+}
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code
+- **data** (object) - Webhook configuration details
+
+#### Response Example
+{
+  "code": "00",
+  "desc": "success",
+  "data": {
+    "webhook_url": "https://example.com/receiveWebhook"
+  }
+}
+```
+
+--------------------------------
+
+### Retrieve Supported Bank List via VietQR API
+
+Source: https://www.vietqr.io/danh-sach-api/api-danh-sach-ma-ngan-hang
+
+Fetches the list of banks supported by VietQR. This data is essential for identifying bank BIN codes required for generating Quick Links.
+
+```Bash
+curl https://api.vietqr.io/v2/banks
+```
+
+```NodeJS
+import {VietQR} from 'vietqr';
+
+let vietQR = new VietQR({
+    clientID: 'client_id_here',
+    apiKey: 'api_key_here',
+});
+
+// list banks are supported create QR code by Vietqr
+vietQR.getBanks().then((banks)=>{
+    console.log(banks);
+}).catch((err)=>{});
+```
+
+--------------------------------
+
+### Generate QR Code via POST Request
+
+Source: https://www.vietqr.io/danh-sach-api/link-tao-ma-nhanh/api-tao-ma-qr
+
+This endpoint generates a QR code based on beneficiary bank account details. It requires authentication via x-client-id and x-api-key headers and accepts a JSON payload containing account information, transfer amount, and formatting options.
+
+```json
+{
+  "accountNo": "113366668888",
+  "accountName": "QUY VAC XIN PHONG CHONG COVID",
+  "acqId": 970415,
+  "amount": 79000,
+  "addInfo": "Ung Ho Quy Vac Xin",
+  "format": "text",
+  "template": "compact"
+}
+```
+
+--------------------------------
+
+### Generate QR Code Request Payload (JSON)
+
+Source: https://www.vietqr.io/generate
+
+This is a sample JSON payload for the POST /generate endpoint. It includes required fields like account number, acquiring institution ID, and optional fields such as account name, amount, additional information, format, and template.
+
+```json
+{
+  "accountNo": 113366668888,
+  "accountName": "QUY VAC XIN PHONG CHONG COVID",
+  "acqId": 970415,
+  "amount": 79000,
+  "addInfo": "Ung Ho Quy Vac Xin",
+  "format": "text",
+  "template": "compact"
+}
+```
+
+--------------------------------
+
+### POST /v2/lookup
+
+Source: https://www.vietqr.io/lookup
+
+Validates a bank account number and retrieves the account holder's name using the bank's BIN and the account number.
+
+```APIDOC
+## POST /v2/lookup
+
+### Description
+API used to verify if a bank account number is valid. If valid, the API returns the account holder's name.
+
+### Method
+POST
+
+### Endpoint
+https://api.vietqr.io/v2/lookup
+
+### Parameters
+#### Request Body
+- **bin** (integer) - Required - The bank identification number (BIN).
+- **accountNumber** (string) - Required - The beneficiary bank account number. Only numeric characters, 6-19 characters long.
+
+### Request Example
+{
+  "bin": 970415,
+  "accountNumber": "113366668888"
+}
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code (e.g., "00").
+- **desc** (string) - Description of the status.
+- **data** (object) - Contains the account holder information.
+- **data.accountName** (string) - The name of the account holder.
+
+#### Response Example
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "accountName": "QUY VAC XIN PHONG COVID 19"
+  }
+}
+```
+
+--------------------------------
+
+### Embed VietQR Image via HTML
+
+Source: https://www.vietqr.io
+
+A simple method to display a dynamic VietQR code on any web page by using an image tag with a specific URL structure. This requires no complex backend logic and supports various bank codes and templates.
+
+```html
+<img src='https://img.vietqr.io/image/vietinbank-113366668888-compact.jpg'/>
+```
+
+--------------------------------
+
+### Lookup Bank Account Details via VietQR API
+
+Source: https://www.vietqr.io/lookup
+
+This endpoint validates a bank account number using the bank's BIN and the account number. It requires x-client-id and x-api-key headers for authentication and returns the account name if the account is valid.
+
+```json
+{
+  "bin": 970415,
+  "accountNumber": "113366668888"
+}
+```
+
+```json
+{
+  "code": "00",
+  "desc": "Success - Thành công",
+  "data": {
+    "accountName": "QUY VAC XIN PHONG COVID 19"
+  }
+}
+```
+
+--------------------------------
+
+### POST /v2/citizen
+
+Source: https://www.vietqr.io/citizen
+
+Lookup citizen information using a legal identifier (CCCD, CMND, or Tax ID) and the citizen's full name.
+
+```APIDOC
+## POST /v2/citizen
+
+### Description
+Lookup citizen information based on CCCD, CMND, or Tax ID and the citizen's name.
+
+### Method
+POST
+
+### Endpoint
+https://api.vietqr.io/v2/citizen
+
+### Parameters
+#### Request Body
+- **legalId** (string) - Required - Mã định danh cá nhân (CCCD, CMND hoặc Mã số thuế) của công dân
+- **legalName** (string) - Required - Tên công dân
+
+### Request Example
+{
+	"legalId": "8589715960",
+	"legalName": "NGUYEN MINH KHANH"
+}
+
+### Response
+#### Success Response (200)
+- **code** (string) - Status code
+- **desc** (string) - Status description
+- **data** (object) - Citizen details object containing taxId and name
+
+#### Response Example
+{
+	"code": "00",
+	"desc": "Success - Thành công",
+	"data": {
+		"taxId": "8589715960",
+		"name": "Nguyễn Minh Khánh"
+	}
+}
+```
+
+--------------------------------
+
+### Receive Payment Webhook Data
+
+Source: https://www.vietqr.io/paymentRequests
+
+Defines the structure of the payload sent by VietQR to the merchant's webhook endpoint upon a successful transaction. The server should respond with a 2XX status code to acknowledge receipt.
+
+```json
+{
+  "code": "string",
+  "desc": "string",
+  "data": [
+    {
+      "orderCode": 123,
+      "amount": 3000,
+      "description": "VQPMK123",
+      "accountNumber": 12345678,
+      "privateId": 12323,
+      "reference": "TF230204212323",
+      "transactionDatetime": "2023-02-04 18:25:00",
+      "paymentLinkId": 2334,
+      "code": "00",
+      "desc": "Thành công"
+    }
+  ]
+}
+```

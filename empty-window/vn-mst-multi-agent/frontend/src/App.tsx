@@ -8,6 +8,7 @@ import { analyzeCompanyFull } from "./lib/agents";
 import { buildCrmInsight } from "./lib/crm";
 import { SAMPLE_COMPANIES } from "./lib/samples";
 import { fetchBusinessByTaxCode, normalizeMst } from "./lib/vietqr";
+import { api } from "./lib/api";
 import type { CrmPurpose, PipelineState } from "./types";
 import { User } from "@supabase/supabase-js";
 import { 
@@ -45,6 +46,15 @@ export default function App() {
   const [purpose, setPurpose] = useState<CrmPurpose>("kyc");
   const [pipeline, setPipeline] = useState<ExtendedState>(() => initialPipeline("0100109106"));
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handleSwitch = (e: any) => {
+      setActiveTab(e.detail.tab);
+      if (e.detail.mst) setTaxCode(e.detail.mst);
+    };
+    window.addEventListener('switch-tab', handleSwitch as any);
+    return () => window.removeEventListener('switch-tab', handleSwitch as any);
+  }, []);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -86,10 +96,43 @@ export default function App() {
     setPipeline({ ...initialPipeline(mst), step: "fetching_raw" });
 
     try {
-      const raw = await fetchBusinessByTaxCode(mst);
-      setPipeline((prev) => ({ ...prev, raw, step: "researching" }));
+      // 1. Thử tra cứu trong Supabase qua Backend
+      let companyData = null;
+      try {
+        console.log(`Checking Supabase for MST: ${mst}`);
+        const dbSearch = await api.get(`/companies?q=${mst}&page_size=1`);
+        if (dbSearch.data && dbSearch.data.length > 0) {
+          const dbCompany = dbSearch.data[0];
+          companyData = {
+            id: dbCompany.ma_so_thue,
+            name: dbCompany.ten_cong_ty,
+            address: dbCompany.dia_chi_day_du || dbCompany.so_nha || "Đang cập nhật",
+            source: "Supabase"
+          };
+        }
+      } catch (dbErr) {
+        console.warn("Supabase lookup failed, falling back to VietQR:", dbErr);
+      }
 
-      const fullResult = await analyzeCompanyFull(raw.data, purpose);
+      // 2. Nếu chưa có dữ liệu, thử VietQR
+      if (!companyData) {
+        console.log("Fetching from VietQR...");
+        const raw = await fetchBusinessByTaxCode(mst);
+        if (raw.code === "00") {
+          companyData = { ...raw.data, source: "VietQR" };
+        } else {
+          throw new Error("Không tìm thấy thông tin doanh nghiệp trên cả hệ thống nội bộ và VietQR");
+        }
+      }
+
+      setPipeline((prev) => ({ 
+        ...prev, 
+        raw: { data: companyData, code: "00", desc: "Success" }, 
+        step: "researching" 
+      }));
+
+      // 3. Chạy AI Analysis
+      const fullResult = await analyzeCompanyFull(companyData, purpose);
       
       setPipeline((prev) => ({ ...prev, research: fullResult.research, step: "reporting" }));
       await new Promise(r => setTimeout(r, 800));
