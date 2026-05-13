@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Header, UploadFile, File
+from fastapi import FastAPI, Depends, HTTPException, status, Header, UploadFile, File, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
@@ -59,21 +59,19 @@ class ResearchRequest(BaseModel):
 
 # --- Endpoints ---
 
-@app.post("/api/analyze")
-async def analyze_company(
-    req: ResearchRequest, 
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    user=Depends(get_current_user)
+async def run_ai_analysis_task(
+    analysis_id: str,
+    req: ResearchRequest,
+    user_id: str,
+    token: str
 ):
-    """Chạy toàn bộ quy trình phân tích và lưu kết quả."""
+    """Xử lý AI Agent ngầm và cập nhật kết quả vào database."""
     try:
-        # 1. Lựa chọn Agent dựa trên mục đích
+        # 1. Chạy AI Analysis
         if req.purpose == "market_research":
-            # Chạy Market Research chuyên sâu (Internet search + Verifier)
             topic = f"Phân tích thị trường và tiềm năng của doanh nghiệp: {req.company_data.get('name')} (MST: {req.company_data.get('id')})"
             research_report = run_market_research(topic)
             
-            # Giả lập cấu trúc để frontend không lỗi
             result = {
                 "research": {
                     "legalForm": "Đang xác minh",
@@ -91,28 +89,68 @@ async def analyze_company(
                 }
             }
         else:
-            # Chạy B2B CRM thông thường
             result = run_b2b_crm(req.company_data)
 
-        # 2. Thiết lập Token cho client để vượt qua RLS
+        # 2. Cập nhật kết quả vào database
+        # Chúng ta dùng token của user để bypass RLS nếu cần
+        supabase.postgrest.auth(token)
+        
+        update_data = {
+            "research_data": result.get("research"),
+            "report_content": result.get("report", {}).get("summary"),
+            "crm_insights": result.get("crm_insights"),
+            "status": "completed"
+        }
+        
+        supabase.table("company_analysis").update(update_data).eq("id", analysis_id).execute()
+        print(f"Task {analysis_id} completed successfully.")
+
+    except Exception as e:
+        print(f"Error in background task {analysis_id}: {str(e)}")
+        try:
+            supabase.table("company_analysis").update({"status": "failed", "error_log": str(e)}).eq("id", analysis_id).execute()
+        except:
+            pass
+
+@app.post("/api/analyze")
+async def analyze_company(
+    req: ResearchRequest, 
+    background_tasks: BackgroundTasks,
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    user=Depends(get_current_user)
+):
+    """Khởi tạo quy trình phân tích bất đồng bộ."""
+    try:
+        # 1. Tạo bản ghi 'pending' trước
         token = credentials.credentials
         supabase.postgrest.auth(token)
         
-        # 3. Lưu vào database
-        analysis_data = {
+        initial_data = {
             "user_id": user.id,
             "tax_code": req.company_data.get("id"),
             "company_name": req.company_data.get("name"),
-            "research_data": result.get("research"),
-            "report_content": result.get("report", {}).get("summary"),
-            "crm_insights": result.get("crm_insights")
+            "status": "pending"
         }
         
-        supabase.table("company_analysis").insert(analysis_data).execute()
+        res = supabase.table("company_analysis").insert(initial_data).execute()
+        if not res.data:
+            raise HTTPException(status_code=500, detail="Không thể khởi tạo bản ghi phân tích")
+            
+        analysis_id = res.data[0]["id"]
+
+        # 2. Đẩy vào background task
+        background_tasks.add_task(
+            run_ai_analysis_task, 
+            analysis_id, 
+            req, 
+            user.id, 
+            token
+        )
         
-        return result
+        return {"id": analysis_id, "status": "pending", "message": "Quy trình phân tích đã bắt đầu ngầm."}
+        
     except Exception as e:
-        print(f"Error in analyze_company: {str(e)}")
+        print(f"Error initiating analysis: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/history")
@@ -133,6 +171,29 @@ async def get_history(
         return response.data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Lỗi Database: {str(e)}")
+
+@app.get("/api/analyze/{analysis_id}")
+async def get_analysis_status(
+    analysis_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    user=Depends(get_current_user)
+):
+    """Lấy trạng thái và kết quả của task phân tích."""
+    try:
+        token = credentials.credentials
+        supabase.postgrest.auth(token)
+        
+        res = supabase.table("company_analysis") \
+            .select("*") \
+            .eq("id", analysis_id) \
+            .execute()
+            
+        if not res.data:
+            raise HTTPException(status_code=404, detail="Không tìm thấy bản ghi")
+            
+        return res.data[0]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/companies")
 async def list_companies(q: str = None, page: int = 1, page_size: int = 50):

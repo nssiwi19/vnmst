@@ -17,11 +17,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy toàn bộ source code vào container
 COPY . .
 
-# Mở port mặc định của Hugging Face
-EXPOSE 7860
+# Mở port mặc định của FastAPI
+EXPOSE 8000
 
-# Lệnh kiểm tra sức khỏe của Streamlit container
-HEALTHCHECK CMD curl --fail http://localhost:7860/_stcore/health
+# Lệnh kiểm tra sức khỏe
+HEALTHCHECK CMD curl --fail http://localhost:8000/health || exit 1
 
-# Chạy ứng dụng
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0"]
+# Chạy ứng dụng FastAPI
+ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

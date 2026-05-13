@@ -1,5 +1,7 @@
 # Environment
 .env
+.env.*
+!.env.example
 .venv/
 venv/
 env/
@@ -8,6 +10,8 @@ ENV/
 # Node
 node_modules/
 dist/
+dist-ssr/
+*.local
 *.tsbuildinfo
 .npm/
 
@@ -15,24 +19,55 @@ dist/
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 .pytest_cache/
+.mypy_cache/
 
 # Logs
 *.log
-crawler_hsctvn.log
+data-pipeline/*.log
+backend-api/*.log
 
-# Project specific
-reorganize.ps1
-exclude_list.txt
-
-# Data
+# Data & Large Files
 **/data/checkpoint.csv
 **/data/page_checkpoint.json
 **/data/*.csv
 **/data/*.xlsx
+**/data/*.jsonl
+data-pipeline/out/
+data-pipeline/sql/
+data-pipeline/migrations/
+data-pipeline/*.txt
+!data-pipeline/requirements.txt
+!data-pipeline/category_urls.txt
+
+# Binary & Trash
+*.exe
+*.msi
+*.zip
+*.7z
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.bak
 
 # OS
 .DS_Store
 Thumbs.db
-.idea/
-.vscode/

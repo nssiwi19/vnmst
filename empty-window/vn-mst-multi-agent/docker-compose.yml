@@ -4,17 +4,19 @@ services:
   backend-api:
     build: ./backend-api
     ports:
-      - "7860:7860"
+      - "8000:8000"
     env_file: .env
     volumes:
       - ./backend-api:/app
-    command: streamlit run app.py --server.port=7860 --server.address=0.0.0.0
+    # Phải cài thêm uvicorn nếu chưa có trong requirements
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
 
   frontend:
     build: ./frontend
     ports:
       - "5173:5173"
-    env_file: .env
+    env_file: frontend/.env
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    command: npm run dev -- --host
